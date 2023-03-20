@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Quack{% endblock %}
+
+{% block body %}
+    <h1>Create new Quack</h1>
+
+    {{ include('test_controler/_form.html.twig') }}
+
+    <a href="{{ path('app_test_controler_index') }}">back to list</a>
+{% endblock %}
