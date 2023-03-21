@@ -9,11 +9,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class QuackType extends AbstractType
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('content')
-            ->add('createdAt')
+            ->add('createdAt');
         ;
     }
 

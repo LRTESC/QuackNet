@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/test/controler')]
-class TestControlerController extends AbstractController
+class TestController extends AbstractController
 {
     #[Route('/', name: 'app_test_controler_index', methods: ['GET'])]
     public function index(QuackRepository $quackRepository): Response
