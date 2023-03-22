@@ -2,25 +2,29 @@
 
 namespace App\Form;
 
-use App\Entity\Quack;
+use App\Entity\Duck;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class QuackType extends AbstractType
+class DuckType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('content')
-            ->add('createdAt')
+            ->add('email')
+//            ->add('roles')
+            ->add('password')
+            ->add('firstname')
+            ->add('lastname')
+            ->add('duckname')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Quack::class,
+            'data_class' => Duck::class,
         ]);
     }
 }
