@@ -3,35 +3,80 @@
 {% block title %}Quack index{% endblock %}
 
 {% block body %}
-    <h1>Quack index</h1>
+    <div class="row">
+        <h1>Quack index</h1>
 
-    <table class="table">
-        <thead>
+        <table class="table">
+            <thead>
             <tr>
                 <th>Id</th>
                 <th>Content</th>
                 <th>CreatedAt</th>
                 <th>actions</th>
             </tr>
-        </thead>
-        <tbody>
-        {% for quack in quacks %}
-            <tr>
-                <td>{{ quack.id }}</td>
-                <td>{{ quack.content }}</td>
-                <td>{{ quack.createdAt ? quack.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_quack_show', {'id': quack.id}) }}">show</a>
-                    <a href="{{ path('app_quack_edit', {'id': quack.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for quack in quacks %}
+                <tr>
+                    <td>{{ quack.id }}</td>
+                    <td>{{ quack.content }}</td>
+                    <td>{{ quack.createdAt ? quack.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>
+                        <a href="{{ path('app_quack_show', {'id': quack.id}) }}">show</a>
+                        <a href="{{ path('app_quack_edit', {'id': quack.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">no records found</td>
+                </tr>
+            {% endfor %}
 
-    <a href="{{ path('app_quack_new') }}">Create new</a>
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_quack_new') }}">Create new</a>
+    </div>
+    <div class="row my-2">
+        {% for quack in quacks %}
+            <div class="list-group mt-2">
+                <a href="{{ path('app_quack_show', {'id': quack.id}) }}"
+                   class="list-group-item list-group-item-action flex-column align-items-start active">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ quack.duck.duckname }}</h5>
+                        <small>{{ quack.createdAt ? quack.createdAt|date('Y-m-d H:i:s') : '' }}</small>
+                    </div>
+                    <p class="mb-1">{{ quack.content }}</p>
+                    <small class="text-muted">Donec id elit non mi
+                        porta.</small>
+                </a>
+                {% for comment in quack.quacks %}
+                    <a href="{{ path('app_quack_show', {'id': comment.id}) }}"
+                       class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">{{ comment.duck.duckname }}</h5>
+                            <small class="text-muted">{{ comment.createdAt ?
+                                comment.createdAt|date('Y-m-d H:i:s') : '' }}</small>
+                        </div>
+                        <p class="mb-1">{{ quack.content }}</p>
+                        <small class="text-muted">Donec id elit non mi
+                            porta.</small>
+                    </a>
+                {% for comment2 in comment.quacks %}
+                    <a href="{{ path('app_quack_show', {'id': comment2.id}) }}"
+                       class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">{{ comment2.duck.duckname }}</h5>
+                            <small class="text-muted">{{ comment2.createdAt ?
+                                comment2.createdAt|date('Y-m-d H:i:s') : '' }}</small>
+                        </div>
+                        <p class="mb-1">{{ quack.content }}</p>
+                        <small class="text-muted">Donec id elit non mi
+                            porta.</small>
+                    </a>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
