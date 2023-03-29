@@ -50,31 +50,20 @@
                     <small class="text-muted">Donec id elit non mi
                         porta.</small>
                 </a>
-                {% for comment in quack.quacks %}
-                    <a href="{{ path('app_quack_show', {'id': comment.id}) }}"
-                       class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">{{ comment.duck.duckname }}</h5>
-                            <small class="text-muted">{{ comment.createdAt ?
-                                comment.createdAt|date('Y-m-d H:i:s') : '' }}</small>
-                        </div>
-                        <p class="mb-1">{{ quack.content }}</p>
-                        <small class="text-muted">Donec id elit non mi
-                            porta.</small>
-                    </a>
-                {% for comment2 in comment.quacks %}
-                    <a href="{{ path('app_quack_show', {'id': comment2.id}) }}"
-                       class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">{{ comment2.duck.duckname }}</h5>
-                            <small class="text-muted">{{ comment2.createdAt ?
-                                comment2.createdAt|date('Y-m-d H:i:s') : '' }}</small>
-                        </div>
-                        <p class="mb-1">{{ quack.content }}</p>
-                        <small class="text-muted">Donec id elit non mi
-                            porta.</small>
-                    </a>
-                    {% endfor %}
+                {% for comment in quacks %}
+                    {% if comment.comment %}
+                        <a href="{{ path('app_quack_show', {'id': comment.id}) }}"
+                           class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">{{ comment.duck.duckname }}</h5>
+                                <small class="text-muted">{{ comment.createdAt ?
+                                    comment.createdAt|date('Y-m-d H:i:s') : '' }}</small>
+                            </div>
+                            <p class="mb-1">{{ quack.content }}</p>
+                            <small class="text-muted">Donec id elit non mi
+                                porta.</small>
+                        </a>
+                    {% endif %}
                 {% endfor %}
             </div>
         {% endfor %}

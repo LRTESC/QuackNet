@@ -15,7 +15,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHashers, EntityManagerInterface $entityManager): Response
     {
         $user = new Duck();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -24,7 +24,7 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(
-                $userPasswordHasher->hashPassword(
+                $userPasswordHashers->hashPassword(
                     $user,
                     $form->get('plainPassword')->getData()
                 )
