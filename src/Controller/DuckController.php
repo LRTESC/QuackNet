@@ -64,20 +64,28 @@ class DuckController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_duck_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Duck $duck, DucksRepository $ducksRepository): Response
+    public function edit(Request $request, Duck $duck, DucksRepository $ducksRepository, $duckPasswordHashes, $entityManager): Response
     {
-        $form = $this->createForm(DuckType::class, $duck);
+        $form = $this->createForm(RegistrationFormType::class, $duck);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $ducksRepository->save($duck, true);
 
-            return $this->redirectToRoute('app_duck_index', [], Response::HTTP_SEE_OTHER);
+            $duck->setPassword(
+                $duckPasswordHashes->hashPassword(
+                    $duck,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+
+            $entityManager->persist($duck);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_duck_index');
         }
 
-        return $this->render('duck/edit.html.twig', [
-            'duck' => $duck,
-            'form' => $form,
+        return $this->render('duck/new.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 
