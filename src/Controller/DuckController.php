@@ -64,7 +64,8 @@ class DuckController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_duck_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Duck $duck, DucksRepository $ducksRepository, $duckPasswordHashes, $entityManager): Response
+    public function edit(Request $request, Duck $duck,
+                         UserPasswordHasherInterface $duckPasswordHashes, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(RegistrationFormType::class, $duck);
         $form->handleRequest($request);
